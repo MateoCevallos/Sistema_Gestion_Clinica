@@ -1,0 +1,103 @@
+<h1>Reportes</h1>
+
+<div class="card controls">
+  <div class="checks">
+    <label class="check">
+      <input type="checkbox" [(ngModel)]="selMensual" />
+      Citas por mes
+    </label>
+
+    <label class="check">
+      <input type="checkbox" [(ngModel)]="selMedico" />
+      Citas por médico (rango)
+    </label>
+  </div>
+
+  <div class="filters">
+
+    <div class="group" *ngIf="selMedico">
+      <label>Desde:</label>
+      <input type="date" [(ngModel)]="desde" />
+      <label>Hasta:</label>
+      <input type="date" [(ngModel)]="hasta" />
+    </div>
+
+    <div class="actions">
+      <button class="btn primary" (click)="generarSeleccion()">Actualizar</button>
+
+      <button class="btn success" (click)="descargarPdfGeneral()" [disabled]="loadingPdf">
+        {{ loadingPdf ? 'Generando...' : 'PDF' }}
+      </button>
+
+      <button class="btn" (click)="imprimir()">Imprimir</button>
+    </div>
+  </div>
+</div>
+
+<div class="card" *ngIf="selMensual">
+  <h2>Reporte: Citas por mes</h2>
+
+  <div class="small" *ngIf="loadingMensual">Cargando...</div>
+
+  <table *ngIf="!loadingMensual">
+    <thead>
+      <tr>
+        <th>MES</th>
+        <th>TOTAL</th>
+        <th>PROGRAMADAS</th>
+        <th>CONFIRMADAS</th>
+        <th>CANCELADAS</th>
+        <th>ATENDIDAS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let r of mensual">
+        <td>{{ mesNombre(r.mes) }}</td>
+        <td>{{ r.total }}</td>
+        <td>{{ r.programadas }}</td>
+        <td>{{ r.confirmadas }}</td>
+        <td>{{ r.canceladas }}</td>
+        <td>{{ r.atendidas }}</td>
+      </tr>
+      <tr *ngIf="mensual.length === 0">
+        <td colspan="6" class="empty">Sin datos</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card" *ngIf="selMedico">
+  <h2>Reporte: Citas por médico (rango)</h2>
+
+  <div class="small" *ngIf="loadingMedico">Cargando...</div>
+
+  <table *ngIf="!loadingMedico">
+    <thead>
+      <tr>
+        <th>MÉDICO</th>
+        <th>ESPECIALIDAD</th>
+        <th>TOTAL</th>
+        <th>PROGRAMADAS</th>
+        <th>CONFIRMADAS</th>
+        <th>CANCELADAS</th>
+        <th>ATENDIDAS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let r of porMedico">
+        <td>{{ r.medicoNombre }}</td>
+        <td>{{ r.especialidad }}</td>
+        <td>{{ r.total }}</td>
+        <td>{{ r.programadas }}</td>
+        <td>{{ r.confirmadas }}</td>
+        <td>{{ r.canceladas }}</td>
+        <td>{{ r.atendidas }}</td>
+      </tr>
+      <tr *ngIf="porMedico.length === 0">
+        <td colspan="7" class="empty">Sin datos</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="msg" *ngIf="msg">{{ msg }}</div>

@@ -1,0 +1,46 @@
+# =========================
+# ROOT - Sistema_Gestion_Clinica
+# .NET + Angular
+# =========================
+
+# --- OS / Editor ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# =========================
+# BACKEND (.NET)
+# =========================
+**/bin/
+**/obj/
+**/*.user
+**/*.suo
+**/*.cache
+**/*.log
+**/.vs/
+**/TestResults/
+
+# EF / build artifacts
+**/Migrations/ # (Evitar migraciones - conservar; Hacer migraciones - borrar)
+
+# appsettings sensibles (opcional)
+# backend/**/appsettings.Development.json
+
+# =========================
+# FRONTEND (Angular)
+# =========================
+**/node_modules/
+**/dist/
+**/.angular/
+**/coverage/
+**/out-tsc/
+**/.sass-cache/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Angular cache variants
+**/.cache/

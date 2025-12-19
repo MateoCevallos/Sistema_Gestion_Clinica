@@ -1,0 +1,118 @@
+h1 {
+  margin: 0 0 12px;
+}
+
+.actions {
+  margin: 10px 0 14px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  margin-bottom: 16px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.field label {
+  font-weight: 700;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #d7dbe3;
+  border-radius: 10px;
+  outline: none;
+}
+
+.field.wide {
+  grid-column: span 2;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.btn {
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.btn.primary {
+  background: #1e88e5;
+  color: #fff;
+}
+
+.btn.success {
+  background: #1b8f3a;
+  color: #fff;
+}
+
+.icon {
+  border: none;
+  background: #eef3ff;
+  padding: 8px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.icon.danger {
+  background: #ffecec;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+th,
+td {
+  border: 1px solid #e2e6ef;
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background: #f4f6fb;
+}
+
+.empty {
+  text-align: center;
+  padding: 16px;
+  color: #666;
+}
+
+.msg {
+  margin-top: 10px;
+  color: #0a6;
+  font-weight: 700;
+}
+
+.small {
+  color: #666;
+}
+
+
+.search input {
+  width: 60%;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #bcd;
+  display: block;
+}

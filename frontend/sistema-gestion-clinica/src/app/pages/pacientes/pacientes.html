@@ -1,0 +1,103 @@
+<h1>Gestión de Pacientes</h1>
+
+<div class="actions">
+  <button class="btn primary" (click)="toggleNuevo()">
+    {{ showForm ? 'Cerrar' : 'Nuevo' }}
+  </button>
+</div>
+
+<div class="card" *ngIf="showForm">
+  <h2>{{ editId ? 'Editar paciente' : 'Nuevo paciente' }}</h2>
+
+  <form (ngSubmit)="onSubmit()">
+    <div class="grid">
+      <div class="field">
+        <label>Nombres</label>
+        <input [(ngModel)]="form.nombres" name="nombres" />
+      </div>
+
+      <div class="field">
+        <label>Apellidos</label>
+        <input [(ngModel)]="form.apellidos" name="apellidos" />
+      </div>
+
+      <div class="field">
+        <label>Documento</label>
+        <input [(ngModel)]="form.documento" name="documento" />
+      </div>
+
+      <div class="field">
+        <label>Teléfono</label>
+        <input [(ngModel)]="form.telefono" name="telefono" />
+      </div>
+
+      <div class="field">
+        <label>Email</label>
+        <input [(ngModel)]="form.email" name="email" />
+      </div>
+
+      <div class="field">
+        <label>Fecha de nacimiento</label>
+        <input type="date" [(ngModel)]="form.fechaNacimiento" name="fechaNacimiento" />
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn success" type="submit">Guardar</button>
+      <button class="btn" type="button" (click)="resetForm()">Limpiar</button>
+    </div>
+
+    <div class="msg" *ngIf="msg">{{ msg }}</div>
+  </form>
+</div>
+
+<div class="card search">
+  <h2>Buscar</h2>
+  <input
+    placeholder="Buscar por nombre, apellido o documento..."
+    [(ngModel)]="q"
+    (input)="applyFilter()"
+    name="q"
+  />
+</div>
+
+<div class="card">
+  <h2>Listado de pacientes</h2>
+
+  <div class="small" *ngIf="loading">Cargando...</div>
+
+  <table *ngIf="!loading">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>NOMBRES</th>
+        <th>APELLIDOS</th>
+        <th>DOCUMENTO</th>
+        <th>TELÉFONO</th>
+        <th>EMAIL</th>
+        <th>EDITAR</th>
+        <th>ELIMINAR</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of filtrados; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ p.nombres }}</td>
+        <td>{{ p.apellidos }}</td>
+        <td>{{ p.documento }}</td>
+        <td>{{ p.telefono || '-' }}</td>
+        <td>{{ p.email || '-' }}</td>
+        <td>
+          <button class="icon" (click)="editar(p)">✏️</button>
+        </td>
+        <td>
+          <button class="icon danger" (click)="eliminar(p)">🗑️</button>
+        </td>
+      </tr>
+
+      <tr *ngIf="filtrados.length === 0">
+        <td colspan="8" class="empty">Sin registros</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

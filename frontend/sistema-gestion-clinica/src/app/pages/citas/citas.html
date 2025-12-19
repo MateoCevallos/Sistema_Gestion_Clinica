@@ -1,0 +1,112 @@
+<h1>Gestión de Citas</h1>
+
+<div class="actions">
+  <button class="btn primary" (click)="toggleNuevo()">
+    {{ showForm ? 'Cerrar' : 'Nueva cita' }}
+  </button>
+</div>
+
+<div class="card" *ngIf="showForm">
+  <h2>{{ editId ? 'Editar cita' : 'Nueva cita' }}</h2>
+
+  <form (ngSubmit)="onSubmit()">
+    <div class="grid">
+      <div class="field">
+        <label>Paciente</label>
+        <select [(ngModel)]="form.pacienteId" name="pacienteId">
+          <option [ngValue]="0">-- Seleccione --</option>
+          <option *ngFor="let p of pacientes" [ngValue]="p.id">
+            {{ p.nombres }} {{ p.apellidos }} ({{ p.documento }})
+          </option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Médico</label>
+        <select [(ngModel)]="form.medicoId" name="medicoId">
+          <option [ngValue]="0">-- Seleccione --</option>
+          <option *ngFor="let m of medicos" [ngValue]="m.id">
+            {{ m.nombres }} {{ m.apellidos }} - {{ m.especialidad }}
+          </option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Fecha y hora</label>
+        <input type="datetime-local" [(ngModel)]="form.fechaHora" name="fechaHora" />
+      </div>
+
+      <div class="field wide">
+        <label>Motivo</label>
+        <input [(ngModel)]="form.motivo" name="motivo" />
+      </div>
+
+      <div class="field">
+        <label>Estado</label>
+        <select [(ngModel)]="form.estado" name="estado">
+          <option>Programada</option>
+          <option>Confirmada</option>
+          <option>Cancelada</option>
+          <option>Atendida</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn success" type="submit">Guardar</button>
+      <button class="btn" type="button" (click)="resetForm()">Limpiar</button>
+    </div>
+
+    <div class="msg" *ngIf="msg">{{ msg }}</div>
+  </form>
+</div>
+
+<div class="card search">
+  <h2>Buscar</h2>
+  <input
+    placeholder="Buscar por paciente, médico, especialidad, estado o motivo..."
+    [(ngModel)]="q"
+    (input)="applyFilter()"
+    name="q"
+  />
+</div>
+
+<div class="card">
+  <h2>Listado de citas</h2>
+  <div class="small" *ngIf="loading">Cargando...</div>
+
+  <table *ngIf="!loading">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>FECHA/HORA</th>
+        <th>PACIENTE</th>
+        <th>MÉDICO</th>
+        <th>ESPECIALIDAD</th>
+        <th>ESTADO</th>
+        <th>MOTIVO</th>
+        <th>EDITAR</th>
+        <th>ELIMINAR</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr *ngFor="let c of filtradas; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ c.fechaHora | date:'short' }}</td>
+        <td>{{ c.pacienteNombre }}</td>
+        <td>{{ c.medicoNombre }}</td>
+        <td>{{ c.medicoEspecialidad }}</td>
+        <td>{{ c.estado }}</td>
+        <td>{{ c.motivo || '-' }}</td>
+        <td><button class="icon" (click)="editar(c)">✏️</button></td>
+        <td><button class="icon danger" (click)="eliminar(c)">🗑️</button></td>
+      </tr>
+
+
+      <tr *ngIf="filtradas.length === 0">
+        <td colspan="9" class="empty">Sin registros</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
